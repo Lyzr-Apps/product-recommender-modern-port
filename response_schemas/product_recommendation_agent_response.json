@@ -1,20 +1,27 @@
 {
   "agent_name": "Product Recommendation Agent",
   "agent_id": "698ba5ef1795f4806db0eb5a",
-  "agent_purpose": "Product recommendation chatbot with email summary capability via Gmail",
-  "description": "Product recommendation chatbot that understands user requirements (team size, budget, features), provides tailored product recommendations with pricing and fit explanations, asks clarifying questions, and acknowledges email summary requests for follow-up via Gmail integration.",
+  "agent_purpose": "Product recommendation with knowledge base search, missing product email tickets via Gmail, and conversation summary email delivery",
+  "description": "AI-powered product recommendation agent with knowledge base search, email notifications for missing products, and conversation summary delivery via Gmail",
   "response_schema": {
     "status": "string",
     "result": {
       "summary": "string",
       "data": {
+        "greeting": "string",
+        "clarifying_questions": [
+          "string"
+        ],
         "recommendations": [
           "any"
         ],
-        "comparison": "null",
+        "comparison_notes": "string",
+        "next_steps": "string",
+        "email_acknowledgment": "string",
         "ticket_sent": "boolean",
         "summary_sent": "boolean",
-        "email_recipient": "string"
+        "email_recipient": "string",
+        "comparison": "null"
       }
     },
     "metadata": {
@@ -25,40 +32,54 @@
   "example_response": {
     "status": "success",
     "result": {
-      "summary": "Quantum computing simulator not found in catalog. Product request ticket sent; alternatives will be provided.",
+      "summary": "No industrial-grade 3D bioprinter found; product request ticket sent.",
       "data": {
+        "greeting": "Thank you for your inquiry regarding an industrial-grade 3D bioprinter for tissue engineering.",
+        "clarifying_questions": [
+          "Are there specific materials or tissue types you need the bioprinter to support?",
+          "Do you have any size or throughput requirements for the bioprinter?"
+        ],
         "recommendations": [],
-        "comparison": null,
+        "comparison_notes": "",
+        "next_steps": "A product request ticket has been submitted to our catalog team for your bioprinter request. We will update you if it becomes available.",
+        "email_acknowledgment": "A notification has been sent to our team regarding your requested product.",
         "ticket_sent": true,
         "summary_sent": false,
-        "email_recipient": "test@example.com"
+        "email_recipient": "test@example.com",
+        "comparison": null
       }
     },
     "metadata": {
       "agent_name": "Product Recommendation Agent",
-      "timestamp": "2024-06-12T19:46:27Z"
+      "timestamp": "2024-06-12T14:28:43Z"
     }
   },
   "is_actual_tested": true,
-  "test_timestamp": "2026-02-10T23:19:45.052317",
+  "test_timestamp": "2026-02-10T23:26:54.342980",
   "test_message_used": "Hello, provide a sample response",
-  "raw_test_response": "Hello! Thank you for reaching out. I\u2019d be happy to help you find the perfect product for your needs.\n\nCould you please share a bit more about what you\u2019re looking for? For example:\n\n- What type of product are you interested in? (e.g., laptops, software, home appliances, etc.)\n- Do you have any specific features or requirements in mind?\n- What\u2019s your budget range?\n- Is this for personal use or for a team/business?\n\nThe more details you share, the better I can tailor my recommendations for you!",
-  "test_error": "Response not valid JSON: Expecting value: line 1 column 1 (char 0)",
   "actual_test_response": {
     "status": "success",
     "result": {
-      "summary": "Quantum computing simulator not found in catalog. Product request ticket sent; alternatives will be provided.",
+      "summary": "No industrial-grade 3D bioprinter found; product request ticket sent.",
       "data": {
+        "greeting": "Thank you for your inquiry regarding an industrial-grade 3D bioprinter for tissue engineering.",
+        "clarifying_questions": [
+          "Are there specific materials or tissue types you need the bioprinter to support?",
+          "Do you have any size or throughput requirements for the bioprinter?"
+        ],
         "recommendations": [],
-        "comparison": null,
+        "comparison_notes": "",
+        "next_steps": "A product request ticket has been submitted to our catalog team for your bioprinter request. We will update you if it becomes available.",
+        "email_acknowledgment": "A notification has been sent to our team regarding your requested product.",
         "ticket_sent": true,
         "summary_sent": false,
-        "email_recipient": "test@example.com"
+        "email_recipient": "test@example.com",
+        "comparison": null
       }
     },
     "metadata": {
       "agent_name": "Product Recommendation Agent",
-      "timestamp": "2024-06-12T19:46:27Z"
+      "timestamp": "2024-06-12T14:28:43Z"
     }
   },
   "test_passed": true

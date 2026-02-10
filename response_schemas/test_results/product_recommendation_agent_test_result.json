@@ -1,27 +1,35 @@
 {
   "agent_name": "Product Recommendation Agent",
   "agent_id": "698ba5ef1795f4806db0eb5a",
-  "test_message": "I need a quantum computing simulator for my university lab. Do you carry anything like that?",
-  "expected_purpose": "The agent should detect that quantum computing simulators are not in the product catalog, IMMEDIATELY call the GMAIL_SEND_EMAIL tool to send a product request ticket to test@example.com, confirm to the user that the ticket was sent, and suggest closest alternatives if any.",
-  "timestamp": "2026-02-10T23:19:45.051804",
+  "test_message": "I need an industrial-grade 3D bioprinter for tissue engineering. Send a product request ticket to test@example.com if it's not in your catalog.",
+  "expected_purpose": "The agent should detect that 3D bioprinters are not in the catalog, call GMAIL_SEND_EMAIL to send a ticket to test@example.com, and return a structured JSON response with ticket_sent: true, email_recipient: test@example.com, and empty recommendations array.",
+  "timestamp": "2026-02-10T23:26:54.342299",
   "is_valid_json": true,
   "validation_errors": [],
   "actual_response": {
     "status": "success",
     "result": {
-      "summary": "Quantum computing simulator not found in catalog. Product request ticket sent; alternatives will be provided.",
+      "summary": "No industrial-grade 3D bioprinter found; product request ticket sent.",
       "data": {
+        "greeting": "Thank you for your inquiry regarding an industrial-grade 3D bioprinter for tissue engineering.",
+        "clarifying_questions": [
+          "Are there specific materials or tissue types you need the bioprinter to support?",
+          "Do you have any size or throughput requirements for the bioprinter?"
+        ],
         "recommendations": [],
-        "comparison": null,
+        "comparison_notes": "",
+        "next_steps": "A product request ticket has been submitted to our catalog team for your bioprinter request. We will update you if it becomes available.",
+        "email_acknowledgment": "A notification has been sent to our team regarding your requested product.",
         "ticket_sent": true,
         "summary_sent": false,
-        "email_recipient": "test@example.com"
+        "email_recipient": "test@example.com",
+        "comparison": null
       }
     },
     "metadata": {
       "agent_name": "Product Recommendation Agent",
-      "timestamp": "2024-06-12T19:46:27Z"
+      "timestamp": "2024-06-12T14:28:43Z"
     }
   },
-  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"summary\": \"Quantum computing simulator not found in catalog. Product request ticket sent; alternatives will be provided.\",\n    \"data\": {\n      \"recommendations\": [],\n      \"comparison\": null,\n      \"ticket_sent\": true,\n      \"summary_sent\": false,\n      \"email_recipient\": \"test@example.com\"\n    }\n  },\n  \"metadata\": {\n    \"agent_name\": \"Product Recommendation Agent\",\n    \"timestamp\": \"2024-06-12T19:46:27Z\"\n  }\n}"
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"summary\": \"No industrial-grade 3D bioprinter found; product request ticket sent.\",\n    \"data\": {\n      \"greeting\": \"Thank you for your inquiry regarding an industrial-grade 3D bioprinter for tissue engineering.\",\n      \"clarifying_questions\": [\n        \"Are there specific materials or tissue types you need the bioprinter to support?\",\n        \"Do you have any size or throughput requirements for the bioprinter?\"\n      ],\n      \"recommendations\": [],\n      \"comparison_notes\": \"\",\n      \"next_steps\": \"A product request ticket has been submitted to our catalog team for your bioprinter request. We will update you if it becomes available.\",\n      \"email_acknowledgment\": \"A notification has been sent to our team regarding your requested product.\",\n      \"ticket_sent\": true,\n      \"summary_sent\": false,\n      \"email_recipient\": \"test@example.com\",\n      \"comparison\": null\n    }\n  },\n  \"metadata\": {\n    \"agent_name\": \"Product Recommendation Agent\",\n    \"timestamp\": \"2024-06-12T14:28:43Z\"\n  }\n}"
 }
