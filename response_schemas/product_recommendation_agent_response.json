@@ -4,40 +4,42 @@
   "agent_purpose": "Product recommendation chatbot with email summary capability via Gmail",
   "description": "Product recommendation chatbot that understands user requirements (team size, budget, features), provides tailored product recommendations with pricing and fit explanations, asks clarifying questions, and acknowledges email summary requests for follow-up via Gmail integration.",
   "response_schema": {
-    "status": "string (success|error)",
-    "result": {
-      "response": "string",
-      "action_taken": "string (optional)",
-      "data": "object (optional, any structured data)",
-      "suggestions": [
-        "string (optional)"
-      ]
-    },
-    "metadata": {
-      "agent_name": "string",
-      "timestamp": "string (ISO)"
-    }
+    "greeting": "string",
+    "clarifying_questions": [
+      "string"
+    ],
+    "recommendations": [
+      "any"
+    ],
+    "comparison_notes": "string",
+    "next_steps": "string"
   },
   "example_response": {
-    "status": "success",
-    "result": {
-      "response": "I've completed the task you requested",
-      "action_taken": "Processed the input and generated output",
-      "data": {
-        "key": "value"
-      },
-      "suggestions": [
-        "You might also want to try X"
-      ]
-    },
-    "metadata": {
-      "agent_name": "Product Recommendation Agent",
-      "timestamp": "2025-01-15T10:30:00Z"
-    }
+    "greeting": "Hello! Thank you for reaching out. A quantum computing development kit sounds like an exciting tool for research.",
+    "clarifying_questions": [
+      "Could you share more details about your requirements? For example: Are you seeking hardware, simulation software, or a combination of both?",
+      "What specific features or platform compatibility do you need (e.g., support for Qiskit, Cirq, IBM Q, etc.)?",
+      "Do you have a particular budget in mind?"
+    ],
+    "recommendations": [],
+    "comparison_notes": "",
+    "next_steps": "I\u2019ll search the catalog now to see if we have quantum computing development kits or relevant alternatives. If we don\u2019t currently carry this category, I\u2019ll create a product request ticket on your behalf and suggest the closest matches we do offer."
   },
-  "is_actual_tested": false,
-  "test_timestamp": null,
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-10T23:14:57.012904",
   "test_message_used": "Hello, provide a sample response",
   "raw_test_response": "Hello! Thank you for reaching out. I\u2019d be happy to help you find the perfect product for your needs.\n\nCould you please share a bit more about what you\u2019re looking for? For example:\n\n- What type of product are you interested in? (e.g., laptops, software, home appliances, etc.)\n- Do you have any specific features or requirements in mind?\n- What\u2019s your budget range?\n- Is this for personal use or for a team/business?\n\nThe more details you share, the better I can tailor my recommendations for you!",
-  "test_error": "Response not valid JSON: Expecting value: line 1 column 1 (char 0)"
+  "test_error": "Response not valid JSON: Expecting value: line 1 column 1 (char 0)",
+  "actual_test_response": {
+    "greeting": "Hello! Thank you for reaching out. A quantum computing development kit sounds like an exciting tool for research.",
+    "clarifying_questions": [
+      "Could you share more details about your requirements? For example: Are you seeking hardware, simulation software, or a combination of both?",
+      "What specific features or platform compatibility do you need (e.g., support for Qiskit, Cirq, IBM Q, etc.)?",
+      "Do you have a particular budget in mind?"
+    ],
+    "recommendations": [],
+    "comparison_notes": "",
+    "next_steps": "I\u2019ll search the catalog now to see if we have quantum computing development kits or relevant alternatives. If we don\u2019t currently carry this category, I\u2019ll create a product request ticket on your behalf and suggest the closest matches we do offer."
+  },
+  "test_passed": false
 }

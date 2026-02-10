@@ -7,11 +7,12 @@
       "has_kb": true,
       "rag_id": "698ba5de67a82d6d27bdde7a",
       "has_gmail": true,
+      "has_ticket_feature": true,
       "test_status": "passed",
-      "test_timestamp": "2026-02-10T22:28:51.378973",
+      "test_timestamp": "2026-02-10T23:14:57.012381",
       "test_response_file": "/app/nextjs-project/test_responses/product_recommendation_agent_response.json",
       "response_type": "conversational",
-      "notes": "Agent returns conversational text (not structured JSON). Response successfully includes product recommendations, clarifying questions, and email acknowledgment. Structured schema derived from response content."
+      "notes": "Agent returns conversational text (not structured JSON). Response includes product recommendations, clarifying questions, email acknowledgment, and missing product ticket creation via Gmail. Structured schema derived from response content."
     }
   ],
   "knowledge_bases": [

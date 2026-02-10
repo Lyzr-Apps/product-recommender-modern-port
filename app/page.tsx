@@ -79,6 +79,7 @@ interface ResponseData {
   comparison_notes?: string
   next_steps?: string
   email_acknowledgment?: string
+  ticket_notification?: string
 }
 
 interface ParsedAgentResponse {
@@ -260,6 +261,7 @@ function parseAgentResponse(raw: any): ParsedAgentResponse {
         comparison_notes: raw?.result?.data?.comparison_notes ?? undefined,
         next_steps: raw?.result?.data?.next_steps ?? undefined,
         email_acknowledgment: raw?.result?.data?.email_acknowledgment ?? undefined,
+        ticket_notification: raw?.result?.data?.ticket_notification ?? undefined,
       },
     }
   }
@@ -279,6 +281,7 @@ function parseAgentResponse(raw: any): ParsedAgentResponse {
         comparison_notes: raw?.comparison_notes ?? raw?.data?.comparison_notes ?? undefined,
         next_steps: raw?.next_steps ?? raw?.data?.next_steps ?? undefined,
         email_acknowledgment: raw?.email_acknowledgment ?? raw?.data?.email_acknowledgment ?? undefined,
+        ticket_notification: raw?.ticket_notification ?? raw?.data?.ticket_notification ?? undefined,
       },
     }
   }
@@ -361,7 +364,7 @@ function TypingIndicator() {
 function AgentMessage({ message }: { message: ChatMessage }) {
   const parsed = message?.parsed
   const data = parsed?.data
-  const hasStructuredData = data?.greeting || (Array.isArray(data?.recommendations) && data.recommendations.length > 0) || data?.clarifying_questions
+  const hasStructuredData = data?.greeting || (Array.isArray(data?.recommendations) && data.recommendations.length > 0) || data?.clarifying_questions || data?.ticket_notification
 
   return (
     <div className="flex items-start gap-3 py-3">
@@ -426,6 +429,19 @@ function AgentMessage({ message }: { message: ChatMessage }) {
                 <div className="flex items-center gap-2">
                   <FiMail className="w-4 h-4 text-primary flex-shrink-0" />
                   <p className="text-sm text-card-foreground leading-relaxed">{data.email_acknowledgment}</p>
+                </div>
+              </div>
+            )}
+
+            {/* Ticket Notification */}
+            {data?.ticket_notification && (
+              <div className="bg-accent/10 backdrop-blur-sm border border-accent/30 rounded-2xl px-4 py-3 shadow-sm">
+                <div className="flex items-start gap-2">
+                  <FiAlertCircle className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-xs font-medium text-accent uppercase tracking-wide mb-1">Product Request Ticket</p>
+                    <p className="text-sm text-card-foreground leading-relaxed">{data.ticket_notification}</p>
+                  </div>
                 </div>
               </div>
             )}
