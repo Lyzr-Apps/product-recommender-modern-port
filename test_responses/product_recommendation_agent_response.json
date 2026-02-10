@@ -1,0 +1,63 @@
+{
+  "agent_name": "Product Recommendation Agent",
+  "agent_id": "698ba5ef1795f4806db0eb5a",
+  "test_input": "I need a solution for team collaboration that supports remote work. What do you recommend?",
+  "response": {
+    "status": "success",
+    "result": {
+      "summary": "Recommended top team collaboration solutions for remote work.",
+      "data": {
+        "greeting": "Thank you for reaching out! I'd love to help you find the perfect team collaboration solution for remote work.",
+        "clarifying_questions": [
+          "Could you share how large your team is?",
+          "Are there any specific features you need, such as video conferencing, file sharing, or task management?",
+          "Do you have a preferred budget or any existing tools you'd like to integrate with?"
+        ],
+        "recommendations": [
+          {
+            "product_name": "Microsoft Teams",
+            "key_features": "Integrated chat, video calls, file sharing, calendar, and seamless integration with Office 365 apps.",
+            "why_its_a_fit": "Great for both small and large remote teams, providing robust collaboration tools in one platform. Highly secure and scalable.",
+            "price": "Free version available; paid plans start at $4/user/month."
+          },
+          {
+            "product_name": "Slack",
+            "key_features": "Real-time messaging, channels, rich integration ecosystem, audio/video huddles, and easy file sharing.",
+            "why_its_a_fit": "Excellent for remote teams needing agile communication, with thousands of integrations for workflow automation.",
+            "price": "Free version available; paid plans from $7.25/user/month."
+          },
+          {
+            "product_name": "Zoom One",
+            "key_features": "High-quality video conferencing, chat, collaboration boards, and a marketplace with app integrations.",
+            "why_its_a_fit": "Ideal if your team prioritizes video meetings and needs flexible collaboration tools for remote work.",
+            "price": "Free basic plan; paid plans from $14.99/user/month."
+          }
+        ],
+        "comparison_notes": "Microsoft Teams offers the broadest suite for collaboration, covering messaging, meetings, and documents. Slack focuses on fast-paced communication and integration flexibility, while Zoom is best for teams with heavy video call requirements.",
+        "next_steps": "Let me know your team size and required features, or if you'd like a deeper comparison between these options!"
+      }
+    },
+    "metadata": {
+      "agent_name": "Product Recommendation Agent",
+      "timestamp": "2024-06-13T15:20:00Z"
+    }
+  },
+  "field_types": {
+    "result.summary": "string",
+    "result.data": "object",
+    "result.data.greeting": "string",
+    "result.data.clarifying_questions": "array",
+    "result.data.clarifying_questions[]": "string",
+    "result.data.recommendations": "array",
+    "result.data.recommendations[].product_name": "string",
+    "result.data.recommendations[].key_features": "string",
+    "result.data.recommendations[].why_its_a_fit": "string",
+    "result.data.recommendations[].price": "string",
+    "result.data.comparison_notes": "string",
+    "result.data.next_steps": "string",
+    "metadata.agent_name": "string",
+    "metadata.timestamp": "string"
+  },
+  "status": "passed",
+  "timestamp": "2026-02-10T00:00:00Z"
+}

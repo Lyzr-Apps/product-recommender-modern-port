@@ -1,0 +1,103 @@
+{
+  "agent_name": "Product Recommendation Agent",
+  "agent_id": "698ba5ef1795f4806db0eb5a",
+  "agent_purpose": "Product recommendation chatbot that searches a knowledge base catalog",
+  "description": "Product recommendation agent that returns greeting text, clarifying questions, a list of product recommendations with name/features/fit/price, comparison notes, and next steps.",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "summary": "string",
+      "data": {
+        "greeting": "string",
+        "clarifying_questions": [
+          "string"
+        ],
+        "recommendations": [
+          {
+            "product_name": "string",
+            "key_features": "string",
+            "why_its_a_fit": "string",
+            "price": "string"
+          }
+        ],
+        "comparison_notes": "string",
+        "next_steps": "string"
+      }
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "summary": "Sample product recommendation response for a customer seeking advice.",
+      "data": {
+        "greeting": "Hello! Welcome! How can I assist you today in finding the perfect product for your needs?",
+        "clarifying_questions": [
+          "Could you please tell me what type of product you are looking for?",
+          "Do you have a specific budget or any particular features in mind?",
+          "Will this product be for personal use or a team/organization?"
+        ],
+        "recommendations": [
+          {
+            "product_name": "Acme Productivity Suite",
+            "key_features": "Includes word processing, spreadsheets, and cloud collaboration tools.",
+            "why_its_a_fit": "Great for individuals and small teams looking to boost productivity with easy sharing and real-time editing.",
+            "price": "$12/month per user"
+          },
+          {
+            "product_name": "ProTask Project Manager",
+            "key_features": "Advanced project management with Gantt charts, task assignments, and integration with popular tools.",
+            "why_its_a_fit": "Ideal for project-oriented teams needing detailed planning, tracking, and teamwork functionality.",
+            "price": "$25/month per user"
+          }
+        ],
+        "comparison_notes": "The Acme Productivity Suite is best for general office tasks, while ProTask Project Manager offers specialized project management features for more complex needs.",
+        "next_steps": "Please let me know which features are most important to you, or if you'd like a more detailed comparison between these options."
+      }
+    },
+    "metadata": {
+      "agent_name": "Product Recommendation Agent",
+      "timestamp": "2024-06-11T12:00:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-10T21:42:30.621340",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "summary": "Sample product recommendation response for a customer seeking advice.",
+      "data": {
+        "greeting": "Hello! Welcome! How can I assist you today in finding the perfect product for your needs?",
+        "clarifying_questions": [
+          "Could you please tell me what type of product you are looking for?",
+          "Do you have a specific budget or any particular features in mind?",
+          "Will this product be for personal use or a team/organization?"
+        ],
+        "recommendations": [
+          {
+            "product_name": "Acme Productivity Suite",
+            "key_features": "Includes word processing, spreadsheets, and cloud collaboration tools.",
+            "why_its_a_fit": "Great for individuals and small teams looking to boost productivity with easy sharing and real-time editing.",
+            "price": "$12/month per user"
+          },
+          {
+            "product_name": "ProTask Project Manager",
+            "key_features": "Advanced project management with Gantt charts, task assignments, and integration with popular tools.",
+            "why_its_a_fit": "Ideal for project-oriented teams needing detailed planning, tracking, and teamwork functionality.",
+            "price": "$25/month per user"
+          }
+        ],
+        "comparison_notes": "The Acme Productivity Suite is best for general office tasks, while ProTask Project Manager offers specialized project management features for more complex needs.",
+        "next_steps": "Please let me know which features are most important to you, or if you'd like a more detailed comparison between these options."
+      }
+    },
+    "metadata": {
+      "agent_name": "Product Recommendation Agent",
+      "timestamp": "2024-06-11T12:00:00Z"
+    }
+  }
+}
