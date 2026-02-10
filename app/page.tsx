@@ -24,6 +24,8 @@ import {
   FiPackage,
   FiDollarSign,
   FiShoppingBag,
+  FiMail,
+  FiCheckCircle,
 } from 'react-icons/fi'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -76,6 +78,7 @@ interface ResponseData {
   recommendations?: Recommendation[]
   comparison_notes?: string
   next_steps?: string
+  email_acknowledgment?: string
 }
 
 interface ParsedAgentResponse {
@@ -256,6 +259,7 @@ function parseAgentResponse(raw: any): ParsedAgentResponse {
           : undefined,
         comparison_notes: raw?.result?.data?.comparison_notes ?? undefined,
         next_steps: raw?.result?.data?.next_steps ?? undefined,
+        email_acknowledgment: raw?.result?.data?.email_acknowledgment ?? undefined,
       },
     }
   }
@@ -274,6 +278,7 @@ function parseAgentResponse(raw: any): ParsedAgentResponse {
           : undefined,
         comparison_notes: raw?.comparison_notes ?? raw?.data?.comparison_notes ?? undefined,
         next_steps: raw?.next_steps ?? raw?.data?.next_steps ?? undefined,
+        email_acknowledgment: raw?.email_acknowledgment ?? raw?.data?.email_acknowledgment ?? undefined,
       },
     }
   }
@@ -412,6 +417,16 @@ function AgentMessage({ message }: { message: ChatMessage }) {
             {data?.next_steps && (
               <div className="bg-primary/5 border border-primary/10 rounded-2xl px-4 py-3 shadow-sm">
                 <p className="text-sm text-card-foreground leading-relaxed">{data.next_steps}</p>
+              </div>
+            )}
+
+            {/* Email Acknowledgment */}
+            {data?.email_acknowledgment && (
+              <div className="bg-secondary/50 backdrop-blur-sm border border-primary/20 rounded-2xl px-4 py-3 shadow-sm">
+                <div className="flex items-center gap-2">
+                  <FiMail className="w-4 h-4 text-primary flex-shrink-0" />
+                  <p className="text-sm text-card-foreground leading-relaxed">{data.email_acknowledgment}</p>
+                </div>
               </div>
             )}
           </>
@@ -617,6 +632,9 @@ export default function Home() {
   const [activeAgentId, setActiveAgentId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [sessionId, setSessionId] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [showEmailBar, setShowEmailBar] = useState(false)
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -685,6 +703,49 @@ export default function Home() {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSend()
+    }
+  }
+
+  const handleEmailSummary = async () => {
+    if (!userEmail.trim() || isLoading || messages.length === 0) return
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(userEmail.trim())) {
+      setEmailStatus('error')
+      return
+    }
+
+    setEmailStatus('sending')
+    const summaryRequest = `Please send a complete summary of our entire conversation to ${userEmail.trim()}. Include all recommendations, key points, and any comparisons we discussed.`
+
+    try {
+      const result = await callAIAgent(summaryRequest, AGENT_ID, {
+        session_id: sessionId || undefined,
+      })
+
+      if (result.success) {
+        setEmailStatus('sent')
+        const parsed = parseAgentResponse(result?.response)
+        const agentMsg: ChatMessage = {
+          id: `agent-${Date.now()}`,
+          role: 'agent',
+          content: '',
+          parsed,
+          metadata: {
+            agent_name: result?.response?.metadata?.agent_name ?? 'Product Recommendation Agent',
+            timestamp: result?.response?.metadata?.timestamp ?? new Date().toISOString(),
+          },
+          timestamp: new Date().toISOString(),
+        }
+        setMessages((prev) => [...prev, agentMsg])
+        setTimeout(() => setEmailStatus('idle'), 5000)
+      } else {
+        setEmailStatus('error')
+        setTimeout(() => setEmailStatus('idle'), 3000)
+      }
+    } catch {
+      setEmailStatus('error')
+      setTimeout(() => setEmailStatus('idle'), 3000)
     }
   }
 
@@ -769,9 +830,98 @@ export default function Home() {
           )}
         </div>
 
+        {/* Email Summary Bar */}
+        {showEmailBar && (
+          <div className="px-4 py-2 border-t border-border/50 bg-card/60 backdrop-blur-xl">
+            <div className="flex items-center gap-2">
+              <FiMail className="w-4 h-4 text-primary flex-shrink-0" />
+              <Input
+                value={userEmail}
+                onChange={(e) => {
+                  setUserEmail(e.target.value)
+                  if (emailStatus === 'error') setEmailStatus('idle')
+                }}
+                placeholder="Enter your email address..."
+                disabled={emailStatus === 'sending'}
+                className={`flex-1 bg-card/80 border-border/60 rounded-xl h-9 text-sm placeholder:text-muted-foreground focus-visible:ring-primary/30 ${emailStatus === 'error' ? 'border-destructive/50 focus-visible:ring-destructive/30' : ''}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    handleEmailSummary()
+                  }
+                }}
+              />
+              <Button
+                onClick={handleEmailSummary}
+                disabled={!userEmail.trim() || emailStatus === 'sending' || messages.length === 0}
+                size="sm"
+                className={`rounded-xl text-xs font-medium flex-shrink-0 ${
+                  emailStatus === 'sent'
+                    ? 'bg-primary/20 text-primary border border-primary/30'
+                    : emailStatus === 'error'
+                    ? 'bg-destructive/10 text-destructive border border-destructive/30'
+                    : 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm'
+                }`}
+                variant={emailStatus === 'sent' || emailStatus === 'error' ? 'outline' : 'default'}
+              >
+                {emailStatus === 'sending' ? (
+                  <>
+                    <FiLoader className="w-3 h-3 mr-1.5 animate-spin" />
+                    Sending...
+                  </>
+                ) : emailStatus === 'sent' ? (
+                  <>
+                    <FiCheckCircle className="w-3 h-3 mr-1.5" />
+                    Sent
+                  </>
+                ) : emailStatus === 'error' ? (
+                  <>
+                    <FiAlertCircle className="w-3 h-3 mr-1.5" />
+                    Failed
+                  </>
+                ) : (
+                  <>
+                    <FiSend className="w-3 h-3 mr-1.5" />
+                    Send Summary
+                  </>
+                )}
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  setShowEmailBar(false)
+                  setEmailStatus('idle')
+                }}
+                className="rounded-full h-8 w-8 text-muted-foreground hover:text-foreground flex-shrink-0"
+              >
+                <FiX className="w-3.5 h-3.5" />
+              </Button>
+            </div>
+            {emailStatus === 'error' && (
+              <p className="text-xs text-destructive mt-1.5 ml-6">Please enter a valid email address.</p>
+            )}
+            {emailStatus === 'sent' && (
+              <p className="text-xs text-primary mt-1.5 ml-6">Conversation summary has been sent to your email.</p>
+            )}
+          </div>
+        )}
+
         {/* Input area */}
         <div className="sticky bottom-0 z-20 px-4 py-3 border-t border-border/50 bg-background/80 backdrop-blur-xl">
           <div className="flex items-center gap-2">
+            {/* Email toggle button */}
+            {!showEmailBar && messages.length > 0 && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowEmailBar(true)}
+                title="Email conversation summary"
+                className="h-11 w-11 rounded-xl text-muted-foreground hover:text-primary hover:bg-primary/5 flex-shrink-0"
+              >
+                <FiMail className="w-4 h-4" />
+              </Button>
+            )}
             <Input
               ref={inputRef}
               value={inputValue}

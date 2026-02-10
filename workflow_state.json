@@ -5,7 +5,13 @@
       "agent_id": "698ba5ef1795f4806db0eb5a",
       "type": "single",
       "has_kb": true,
-      "rag_id": "698ba5de67a82d6d27bdde7a"
+      "rag_id": "698ba5de67a82d6d27bdde7a",
+      "has_gmail": true,
+      "test_status": "passed",
+      "test_timestamp": "2026-02-10T22:28:51.378973",
+      "test_response_file": "/app/nextjs-project/test_responses/product_recommendation_agent_response.json",
+      "response_type": "conversational",
+      "notes": "Agent returns conversational text (not structured JSON). Response successfully includes product recommendations, clarifying questions, and email acknowledgment. Structured schema derived from response content."
     }
   ],
   "knowledge_bases": [
@@ -14,5 +20,12 @@
       "rag_id": "698ba5de67a82d6d27bdde7a",
       "rag_name": "productcatalogv6cc"
     }
-  ]
+  ],
+  "testing": {
+    "last_run": "2026-02-10T22:28:51.378973",
+    "all_passed": true,
+    "agents_tested": 1,
+    "agents_passed": 1,
+    "agents_failed": 0
+  }
 }

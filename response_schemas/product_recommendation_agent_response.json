@@ -1,103 +1,43 @@
 {
   "agent_name": "Product Recommendation Agent",
   "agent_id": "698ba5ef1795f4806db0eb5a",
-  "agent_purpose": "Product recommendation chatbot that searches a knowledge base catalog",
-  "description": "Product recommendation agent that returns greeting text, clarifying questions, a list of product recommendations with name/features/fit/price, comparison notes, and next steps.",
+  "agent_purpose": "Product recommendation chatbot with email summary capability via Gmail",
+  "description": "Product recommendation chatbot that understands user requirements (team size, budget, features), provides tailored product recommendations with pricing and fit explanations, asks clarifying questions, and acknowledges email summary requests for follow-up via Gmail integration.",
   "response_schema": {
-    "status": "string",
+    "status": "string (success|error)",
     "result": {
-      "summary": "string",
-      "data": {
-        "greeting": "string",
-        "clarifying_questions": [
-          "string"
-        ],
-        "recommendations": [
-          {
-            "product_name": "string",
-            "key_features": "string",
-            "why_its_a_fit": "string",
-            "price": "string"
-          }
-        ],
-        "comparison_notes": "string",
-        "next_steps": "string"
-      }
+      "response": "string",
+      "action_taken": "string (optional)",
+      "data": "object (optional, any structured data)",
+      "suggestions": [
+        "string (optional)"
+      ]
     },
     "metadata": {
       "agent_name": "string",
-      "timestamp": "string"
+      "timestamp": "string (ISO)"
     }
   },
   "example_response": {
     "status": "success",
     "result": {
-      "summary": "Sample product recommendation response for a customer seeking advice.",
+      "response": "I've completed the task you requested",
+      "action_taken": "Processed the input and generated output",
       "data": {
-        "greeting": "Hello! Welcome! How can I assist you today in finding the perfect product for your needs?",
-        "clarifying_questions": [
-          "Could you please tell me what type of product you are looking for?",
-          "Do you have a specific budget or any particular features in mind?",
-          "Will this product be for personal use or a team/organization?"
-        ],
-        "recommendations": [
-          {
-            "product_name": "Acme Productivity Suite",
-            "key_features": "Includes word processing, spreadsheets, and cloud collaboration tools.",
-            "why_its_a_fit": "Great for individuals and small teams looking to boost productivity with easy sharing and real-time editing.",
-            "price": "$12/month per user"
-          },
-          {
-            "product_name": "ProTask Project Manager",
-            "key_features": "Advanced project management with Gantt charts, task assignments, and integration with popular tools.",
-            "why_its_a_fit": "Ideal for project-oriented teams needing detailed planning, tracking, and teamwork functionality.",
-            "price": "$25/month per user"
-          }
-        ],
-        "comparison_notes": "The Acme Productivity Suite is best for general office tasks, while ProTask Project Manager offers specialized project management features for more complex needs.",
-        "next_steps": "Please let me know which features are most important to you, or if you'd like a more detailed comparison between these options."
-      }
+        "key": "value"
+      },
+      "suggestions": [
+        "You might also want to try X"
+      ]
     },
     "metadata": {
       "agent_name": "Product Recommendation Agent",
-      "timestamp": "2024-06-11T12:00:00Z"
+      "timestamp": "2025-01-15T10:30:00Z"
     }
   },
-  "is_actual_tested": true,
-  "test_timestamp": "2026-02-10T21:42:30.621340",
+  "is_actual_tested": false,
+  "test_timestamp": null,
   "test_message_used": "Hello, provide a sample response",
-  "actual_test_response": {
-    "status": "success",
-    "result": {
-      "summary": "Sample product recommendation response for a customer seeking advice.",
-      "data": {
-        "greeting": "Hello! Welcome! How can I assist you today in finding the perfect product for your needs?",
-        "clarifying_questions": [
-          "Could you please tell me what type of product you are looking for?",
-          "Do you have a specific budget or any particular features in mind?",
-          "Will this product be for personal use or a team/organization?"
-        ],
-        "recommendations": [
-          {
-            "product_name": "Acme Productivity Suite",
-            "key_features": "Includes word processing, spreadsheets, and cloud collaboration tools.",
-            "why_its_a_fit": "Great for individuals and small teams looking to boost productivity with easy sharing and real-time editing.",
-            "price": "$12/month per user"
-          },
-          {
-            "product_name": "ProTask Project Manager",
-            "key_features": "Advanced project management with Gantt charts, task assignments, and integration with popular tools.",
-            "why_its_a_fit": "Ideal for project-oriented teams needing detailed planning, tracking, and teamwork functionality.",
-            "price": "$25/month per user"
-          }
-        ],
-        "comparison_notes": "The Acme Productivity Suite is best for general office tasks, while ProTask Project Manager offers specialized project management features for more complex needs.",
-        "next_steps": "Please let me know which features are most important to you, or if you'd like a more detailed comparison between these options."
-      }
-    },
-    "metadata": {
-      "agent_name": "Product Recommendation Agent",
-      "timestamp": "2024-06-11T12:00:00Z"
-    }
-  }
+  "raw_test_response": "Hello! Thank you for reaching out. I\u2019d be happy to help you find the perfect product for your needs.\n\nCould you please share a bit more about what you\u2019re looking for? For example:\n\n- What type of product are you interested in? (e.g., laptops, software, home appliances, etc.)\n- Do you have any specific features or requirements in mind?\n- What\u2019s your budget range?\n- Is this for personal use or for a team/business?\n\nThe more details you share, the better I can tailor my recommendations for you!",
+  "test_error": "Response not valid JSON: Expecting value: line 1 column 1 (char 0)"
 }
