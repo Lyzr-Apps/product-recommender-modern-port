@@ -77,9 +77,13 @@ interface ResponseData {
   clarifying_questions?: string[]
   recommendations?: Recommendation[]
   comparison_notes?: string
+  comparison?: string | null
   next_steps?: string
   email_acknowledgment?: string
   ticket_notification?: string
+  ticket_sent?: boolean
+  summary_sent?: boolean
+  email_recipient?: string
 }
 
 interface ParsedAgentResponse {
@@ -262,6 +266,10 @@ function parseAgentResponse(raw: any): ParsedAgentResponse {
         next_steps: raw?.result?.data?.next_steps ?? undefined,
         email_acknowledgment: raw?.result?.data?.email_acknowledgment ?? undefined,
         ticket_notification: raw?.result?.data?.ticket_notification ?? undefined,
+        ticket_sent: raw?.result?.data?.ticket_sent ?? undefined,
+        summary_sent: raw?.result?.data?.summary_sent ?? undefined,
+        email_recipient: raw?.result?.data?.email_recipient ?? undefined,
+        comparison: raw?.result?.data?.comparison ?? undefined,
       },
     }
   }
@@ -282,6 +290,10 @@ function parseAgentResponse(raw: any): ParsedAgentResponse {
         next_steps: raw?.next_steps ?? raw?.data?.next_steps ?? undefined,
         email_acknowledgment: raw?.email_acknowledgment ?? raw?.data?.email_acknowledgment ?? undefined,
         ticket_notification: raw?.ticket_notification ?? raw?.data?.ticket_notification ?? undefined,
+        ticket_sent: raw?.ticket_sent ?? raw?.data?.ticket_sent ?? undefined,
+        summary_sent: raw?.summary_sent ?? raw?.data?.summary_sent ?? undefined,
+        email_recipient: raw?.email_recipient ?? raw?.data?.email_recipient ?? undefined,
+        comparison: raw?.comparison ?? raw?.data?.comparison ?? undefined,
       },
     }
   }
@@ -364,7 +376,7 @@ function TypingIndicator() {
 function AgentMessage({ message }: { message: ChatMessage }) {
   const parsed = message?.parsed
   const data = parsed?.data
-  const hasStructuredData = data?.greeting || (Array.isArray(data?.recommendations) && data.recommendations.length > 0) || data?.clarifying_questions || data?.ticket_notification
+  const hasStructuredData = data?.greeting || (Array.isArray(data?.recommendations) && data.recommendations.length > 0) || data?.clarifying_questions || data?.ticket_notification || data?.ticket_sent
 
   return (
     <div className="flex items-start gap-3 py-3">
@@ -409,10 +421,10 @@ function AgentMessage({ message }: { message: ChatMessage }) {
             )}
 
             {/* Comparison Notes */}
-            {data?.comparison_notes && (
+            {(data?.comparison_notes || (typeof data?.comparison === 'string' && data.comparison)) && (
               <div className="bg-secondary/50 backdrop-blur-sm border border-border/50 rounded-2xl px-4 py-3 shadow-sm">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-1.5">Comparison</p>
-                <div className="text-sm text-card-foreground leading-relaxed">{renderMarkdown(data.comparison_notes)}</div>
+                <div className="text-sm text-card-foreground leading-relaxed">{renderMarkdown(data?.comparison_notes ?? data?.comparison ?? '')}</div>
               </div>
             )}
 
@@ -434,13 +446,17 @@ function AgentMessage({ message }: { message: ChatMessage }) {
             )}
 
             {/* Ticket Notification */}
-            {data?.ticket_notification && (
+            {(data?.ticket_notification || data?.ticket_sent) && (
               <div className="bg-accent/10 backdrop-blur-sm border border-accent/30 rounded-2xl px-4 py-3 shadow-sm">
                 <div className="flex items-start gap-2">
-                  <FiAlertCircle className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                  <FiCheckCircle className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-xs font-medium text-accent uppercase tracking-wide mb-1">Product Request Ticket</p>
-                    <p className="text-sm text-card-foreground leading-relaxed">{data.ticket_notification}</p>
+                    <p className="text-xs font-medium text-accent uppercase tracking-wide mb-1">Product Request Ticket Sent</p>
+                    <p className="text-sm text-card-foreground leading-relaxed">
+                      {data?.ticket_notification
+                        ? data.ticket_notification
+                        : `A product request ticket has been submitted${data?.email_recipient ? ` to ${data.email_recipient}` : ''}. Our team will review your request and follow up.`}
+                    </p>
                   </div>
                 </div>
               </div>

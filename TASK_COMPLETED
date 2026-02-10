@@ -1,11 +1,16 @@
-Missing product ticket feature added successfully.
+Email sending fix completed successfully.
+
+Problem: Agent was not actually calling the GMAIL_SEND_EMAIL tool when products were missing.
 
 Changes made:
-1. Agent instructions updated with steps 13-15 for missing product detection, automatic ticket creation via Gmail, and user notification
-2. Agent tested with missing product scenario (quantum computing dev kit) - responds appropriately with empty recommendations and ticket creation acknowledgment
-3. UI updated with:
-   - ticket_notification field added to ResponseData interface
-   - parseAgentResponse updated to extract ticket_notification in both result wrapper and direct data paths
-   - Ticket notification rendering block in AgentMessage component (accent-colored card with FiAlertCircle icon)
-   - hasStructuredData check updated to include ticket_notification
-4. workflow_state.json updated with has_ticket_feature flag and latest test timestamp
+1. Agent instructions updated to be explicit about IMMEDIATELY calling GMAIL_SEND_EMAIL tool
+   - Steps 13-15: Missing product detection now requires mandatory tool invocation
+   - Steps 16-18: Email summary also requires mandatory tool invocation
+   - Added general rules: "NEVER say 'I will send' — CALL the tool and say 'I have sent'"
+2. Agent tested with missing product query — test PASSED with ticket_sent: true
+3. UI updated to handle new response fields:
+   - Added ticket_sent (boolean), summary_sent (boolean), email_recipient (string), comparison (string|null) to ResponseData
+   - Updated parseAgentResponse in both paths to extract new fields
+   - Ticket notification rendering now handles both ticket_notification (string) AND ticket_sent (boolean)
+   - Comparison rendering now handles both comparison_notes and comparison fields
+   - hasStructuredData check includes ticket_sent

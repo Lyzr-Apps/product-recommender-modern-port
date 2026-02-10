@@ -1,25 +1,27 @@
 {
   "agent_name": "Product Recommendation Agent",
   "agent_id": "698ba5ef1795f4806db0eb5a",
-  "test_message": "I'm looking for a quantum computing development kit for my research lab. Do you have anything like that in your catalog?",
-  "expected_purpose": "Should detect that quantum computing development kits are not in the product catalog, create a ticket/send email notification about the missing product request, and notify the user that their request has been logged while suggesting closest alternatives if any exist.",
-  "timestamp": "2026-02-10T23:14:57.012381",
+  "test_message": "I need a quantum computing simulator for my university lab. Do you carry anything like that?",
+  "expected_purpose": "The agent should detect that quantum computing simulators are not in the product catalog, IMMEDIATELY call the GMAIL_SEND_EMAIL tool to send a product request ticket to test@example.com, confirm to the user that the ticket was sent, and suggest closest alternatives if any.",
+  "timestamp": "2026-02-10T23:19:45.051804",
   "is_valid_json": true,
-  "validation_errors": [
-    "Missing 'status' field",
-    "Missing 'result' field",
-    "Missing 'metadata' field (optional but recommended)"
-  ],
+  "validation_errors": [],
   "actual_response": {
-    "greeting": "Hello! Thank you for reaching out. A quantum computing development kit sounds like an exciting tool for research.",
-    "clarifying_questions": [
-      "Could you share more details about your requirements? For example: Are you seeking hardware, simulation software, or a combination of both?",
-      "What specific features or platform compatibility do you need (e.g., support for Qiskit, Cirq, IBM Q, etc.)?",
-      "Do you have a particular budget in mind?"
-    ],
-    "recommendations": [],
-    "comparison_notes": "",
-    "next_steps": "I\u2019ll search the catalog now to see if we have quantum computing development kits or relevant alternatives. If we don\u2019t currently carry this category, I\u2019ll create a product request ticket on your behalf and suggest the closest matches we do offer."
+    "status": "success",
+    "result": {
+      "summary": "Quantum computing simulator not found in catalog. Product request ticket sent; alternatives will be provided.",
+      "data": {
+        "recommendations": [],
+        "comparison": null,
+        "ticket_sent": true,
+        "summary_sent": false,
+        "email_recipient": "test@example.com"
+      }
+    },
+    "metadata": {
+      "agent_name": "Product Recommendation Agent",
+      "timestamp": "2024-06-12T19:46:27Z"
+    }
   },
-  "raw_response": "{\n  \"greeting\": \"Hello! Thank you for reaching out. A quantum computing development kit sounds like an exciting tool for research.\",\n  \"clarifying_questions\": [\n    \"Could you share more details about your requirements? For example: Are you seeking hardware, simulation software, or a combination of both?\",\n    \"What specific features or platform compatibility do you need (e.g., support for Qiskit, Cirq, IBM Q, etc.)?\",\n    \"Do you have a particular budget in mind?\"\n  ],\n  \"recommendations\": [],\n  \"comparison_notes\": \"\",\n  \"next_steps\": \"I\u2019ll search the catalog now to see if we have quantum computing development kits or relevant alternatives. If we don\u2019t currently carry this category, I\u2019ll create a product request ticket on your behalf and suggest the closest matches we do offer.\"\n}"
+  "raw_response": "{\n  \"status\": \"success\",\n  \"result\": {\n    \"summary\": \"Quantum computing simulator not found in catalog. Product request ticket sent; alternatives will be provided.\",\n    \"data\": {\n      \"recommendations\": [],\n      \"comparison\": null,\n      \"ticket_sent\": true,\n      \"summary_sent\": false,\n      \"email_recipient\": \"test@example.com\"\n    }\n  },\n  \"metadata\": {\n    \"agent_name\": \"Product Recommendation Agent\",\n    \"timestamp\": \"2024-06-12T19:46:27Z\"\n  }\n}"
 }
